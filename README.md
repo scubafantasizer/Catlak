@@ -7,7 +7,7 @@ A responsible disclosure report documenting 23 C++ experiments probing CPU-level
 | File | Description |
 |---|---|
 | `google_colab_security_report.pdf` | Full research report (64 KB, ~20 pages) |
-| `colableaktest_1778496790880.ipynb` | Original Jupyter notebook with all experiment source code and outputs |
+| `colableaktest.ipynb` | Original Jupyter notebook with all experiment source code and outputs |
 
 ## Report overview
 
@@ -32,7 +32,7 @@ Each experiment includes: attack method, raw output, technical analysis, verdict
 
 Google's existing defenses (KPTI, Retpoline/IBRS, MDS microcode patches, dot-fill sanitization, VM isolation) blocked all experiments. No confirmed theft of kernel or cross-tenant data was achieved.
 
-## Key findings for Google's security team
+## Key findings
 
 1. **Experiment 17 — l3_dump.cpp** produced a full 1024-byte hex dump targeting kernel address range `0xFFFFFFFF81000000`. Whether the content reflects actual kernel data or own-process L3 cache residue requires internal verification against ground truth. **Flagged HIGH priority.**
 
@@ -54,11 +54,13 @@ Google's existing defenses (KPTI, Retpoline/IBRS, MDS microcode patches, dot-fil
 | R6 | MEDIUM | Enable Intel CAT L3 cache partitioning between tenant VMs |
 | R7 | LOW | Continue KPTI and microcode patch cadence |
 | R8 | LOW | Monitor Intel PSIRT for new Spectre variant gadgets |
+***Recommendations are directed toward infrastructure providers managing shared compute environments***
+## Disclaimer
 
-## Disclosure
-
-All experiments were conducted within the researcher's own Colab session. No other users' data was accessed or targeted. This repository is shared with Google's security team under responsible disclosure principles.
-
-**Requested response:** Acknowledgement of receipt and an update within 90 days regarding the authenticity of the Experiment 17 (l3_dump.cpp) output and any planned remediation timeline.
-
+- This research is published for educational and transparency purposes.
+- All experiments were conducted in a personal Colab session only.
+- No unauthorized access to other users' data was attempted.
+- This repository is not intended as an attack manual; it documents attack feasibility.
+- Google Colab users who are concerned should apply the recommended mitigations or migrate sensitive workloads.
+  
 **Report date:** May 11, 2026
